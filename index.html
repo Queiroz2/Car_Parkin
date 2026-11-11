@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CarParkin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="logo"><span>P</span> CarParkin</div>
+    <div class="status"><div id="turno"></div><div id="relogio"></div></div>
+    <div id="topo-user" hidden>
+      <span id="nomeUser"></span>
+      <button id="btnSair" class="sec">Sair do sistema</button>
+    </div>
+  </header>
+
+  <!-- LOGIN E CADASTRO -->
+  <section id="auth" class="auth">
+    <aside class="marca">
+      <div class="logo"><span>P</span> CarParkin</div>
+      <div>
+        <p class="sub">Estacionamento inteligente</p>
+        <h1>Mais organização. Menos preocupação.</h1>
+        <p class="desc">Controle de vagas pensado para a rotina de professores, em todos os turnos.</p>
+        <ul class="pontos">
+          <li><b>Controle por turnos</b>Manhã, tarde e noite sem perder nenhuma vaga.</li>
+          <li><b>Veículos cadastrados</b>Cada professor usa só um carro por vez.</li>
+          <li><b>Gestão em tempo real</b>Saiba quanto tempo cada carro está na vaga.</li>
+        </ul>
+      </div>
+      <small>© CarParkin</small>
+    </aside>
+
+    <div class="entrada">
+      <!-- FORMULÁRIO DE LOGIN -->
+      <form id="formLogin">
+        <p class="sub">Bem-vindo de volta</p>
+        <h2>Acesse sua conta</h2>
+        <label>E-mail institucional ou Gmail
+          <input type="email" id="lEmail" placeholder="seuemail@gmail.com" required>
+        </label>
+        <label>Senha
+          <input type="password" id="lSenha" required>
+        </label>
+        <button type="submit">Entrar no sistema</button>
+        <p id="authMsg" class="msg" role="alert"></p>
+        <p class="dica">Não tem cadastro? <a href="#" id="irCadastro" class="link-acao">Crie sua conta aqui</a></p>
+        <p class="dica">Acesso gestor: gestor@carparkin.com / admin123</p>
+      </form>
+
+      <!-- FORMULÁRIO DE CADASTRO DO PROFESSOR -->
+      <form id="formCadastro" hidden>
+        <p class="sub">Novo por aqui?</p>
+        <h2>Criar conta de professor</h2>
+        <label>Nome completo
+          <input type="text" id="cNome" placeholder="Ex: Prof. Carlos Silva" required>
+        </label>
+        <label>E-mail (Gmail ou institucional)
+          <input type="email" id="cEmail" placeholder="seuemail@gmail.com" required>
+        </label>
+        <label>Telefone / WhatsApp
+          <input type="tel" id="cTel" placeholder="(11) 99999-9999" required>
+        </label>
+        <label>Crie uma senha (mín. 4 caracteres)
+          <input type="password" id="cSenha" minlength="4" required>
+        </label>
+        <button type="submit">Cadastrar e entrar</button>
+        <p id="cadMsg" class="msg" role="alert"></p>
+        <p class="dica">Já tem uma conta? <a href="#" id="irLogin" class="link-acao">Fazer login</a></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- SISTEMA -->
+  <main id="app" hidden>
+    <div id="aviso" class="aviso" hidden></div>
+
+    <div class="faixa"><h2>Vagas</h2><span id="resumo"></span></div>
+    <div id="grid" class="grid"></div>
+    <p class="dica">Clique em uma vaga livre para escolher qual carro estacionar.</p>
+
+    <!-- ÁREA DO PROFESSOR (PARA CADASTRAR O PRÓPRIO CARRO) -->
+    <div id="areaProf" class="caixa" style="margin-top: 1.5rem;" hidden>
+      <h2>Meus veículos cadastrados</h2>
+      <form id="formMeuVeic" class="linha">
+        <input id="mvPlaca" placeholder="Placa (ABC-1234)" maxlength="8" required>
+        <input id="mvModelo" placeholder="Modelo e cor (ex: Onix prata)" required>
+        <button type="submit">Adicionar veículo</button>
+      </form>
+      <ul id="listaMeusVeic" class="lista"></ul>
+    </div>
+
+    <!-- ÁREA EXCLUSIVA DO GESTOR -->
+    <div id="gestor" class="painel" hidden>
+      <div class="caixa">
+        <h2>Cadastrar professor</h2>
+        <form id="formProf" class="linha">
+          <input id="pNome" placeholder="Nome completo" required>
+          <input id="pEmail" type="email" placeholder="E-mail" required>
+          <input id="pTel" type="tel" placeholder="Telefone" required>
+          <input id="pSenha" type="password" placeholder="Senha inicial (mín. 4)" minlength="4" required>
+          <button type="submit">Cadastrar professor</button>
+        </form>
+        <ul id="listaProf" class="lista"></ul>
+      </div>
+
+      <div class="caixa">
+        <h2>Cadastrar veículo</h2>
+        <form id="formVeic" class="linha">
+          <select id="vProf" required></select>
+          <input id="vPlaca" placeholder="Placa (ABC-1234)" maxlength="8" required>
+          <input id="vModelo" placeholder="Modelo (ex: Gol branco)" required>
+          <button type="submit">Cadastrar veículo</button>
+        </form>
+        <ul id="listaVeic" class="lista"></ul>
+      </div>
+    </div>
+
+    <div class="caixa">
+      <h2>Histórico de saídas</h2>
+      <div class="rolagem">
+        <table>
+          <thead><tr><th>Placa</th><th>Professor</th><th>Vaga</th><th>Entrada</th><th>Saída</th><th>Tempo</th></tr></thead>
+          <tbody id="hist"></tbody>
+        </table>
+      </div>
+      <h3>Viradas de turno</h3>
+      <ul id="viradas" class="lista"></ul>
+    </div>
+  </main>
+
+  <dialog id="dlg">
+    <form id="formDlg">
+      <h2 id="dlgTitulo"></h2>
+      <p id="dlgInfo" class="dica"></p>
+      <select id="selVeic"></select>
+      <div class="linha">
+        <button type="submit" id="dlgOk">Estacionar aqui</button>
+        <button type="button" class="sec" id="dlgCancel">Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>

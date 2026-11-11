@@ -1,0 +1,99 @@
+/* ===== Base do sistema ===== */
+:root {
+  --asfalto: #11302c;
+  --asfalto2: #17403b;
+  --faixa: #f2724f;
+  --suave: #a8c0ba;
+  --tinta: #f4f7f6;
+}
+
+* { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+body { margin: 0; background: var(--asfalto); color: var(--tinta); }
+[hidden] { display: none !important; }
+
+/* Cabeçalho */
+.topo {
+  background: var(--asfalto2);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.logo { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: .5rem; }
+.logo span { background: var(--faixa); color: #fff; padding: .2rem .55rem; border-radius: .3rem; }
+.status { display: flex; gap: 1rem; font-size: .9rem; color: var(--suave); }
+#topo-user { display: flex; align-items: center; gap: 1rem; }
+
+/* Formulários e botões */
+input, select, button {
+  padding: .65rem .8rem;
+  border-radius: .4rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: var(--asfalto);
+  color: var(--tinta);
+  font-size: .95rem;
+}
+label { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .9rem; font-size: .9rem; }
+button { background: var(--faixa); color: #fff; border: none; font-weight: 600; cursor: pointer; }
+button:hover { opacity: .92; }
+button.sec { background: transparent; border: 1px solid var(--suave); color: var(--tinta); }
+.msg { color: #d9381e; font-size: .85rem; min-height: 1.2rem; margin: .4rem 0; }
+.dica { font-size: .85rem; color: var(--suave); }
+.link-acao { color: var(--faixa); font-weight: 700; text-decoration: underline; }
+
+/* Tela de Login e Cadastro */
+body:not(.logado) .topo { display: none; }
+.auth { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+.marca { background: var(--asfalto2); padding: 2rem 3rem; display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; }
+.marca h1 { font-size: 2.4rem; line-height: 1.15; margin: .5rem 0 1rem; max-width: 16ch; }
+.marca .desc { color: var(--suave); max-width: 38ch; }
+.marca small { color: var(--suave); }
+.sub { margin: 0; font-size: .8rem; color: var(--faixa); font-weight: 600; }
+.pontos { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: .9rem; }
+.pontos li { display: flex; flex-direction: column; font-size: .85rem; color: var(--suave); border-left: 3px solid var(--faixa); padding-left: .8rem; }
+.pontos b { color: var(--tinta); font-size: .95rem; }
+.entrada { background: #f6f7f5; color: #11302c; display: grid; place-items: center; padding: 2rem; }
+.entrada form { width: 100%; max-width: 380px; }
+.entrada h2 { font-size: 1.8rem; margin: .2rem 0 1.2rem; }
+.entrada label { color: #44524e; }
+.entrada input { background: #fff; color: #11302c; border-color: #cfd8d4; width: 100%; }
+.entrada button { background: var(--asfalto2); color: #fff; width: 100%; padding: .8rem; }
+.entrada .dica { color: #5c6a66; }
+
+/* Painel Principal e Vagas */
+main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+.aviso { background: rgba(242,114,79,0.2); border-left: 4px solid var(--faixa); padding: .9rem 1rem; margin-bottom: 1.5rem; border-radius: .3rem; font-weight: 600; }
+.faixa { display: flex; justify-content: space-between; align-items: center; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.vaga { background: var(--asfalto2); padding: 1rem; border-radius: .5rem; border: 2px solid transparent; }
+.vaga.livre { border-color: #2e8b57; cursor: pointer; }
+.vaga.livre:hover { background: #1d4e48; }
+.vaga.ocupada { border-color: var(--faixa); }
+.vaga.minha { background: #244b45; box-shadow: 0 0 0 2px #fff; }
+.vaga strong { display: block; font-size: 1.1rem; margin-bottom: .3rem; }
+
+/* Caixas de Gestão e Tabelas */
+.painel { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+.caixa { background: var(--asfalto2); padding: 1.5rem; border-radius: .6rem; margin-bottom: 1.5rem; }
+.caixa h2 { margin-top: 0; font-size: 1.2rem; }
+.linha { display: flex; flex-wrap: wrap; gap: .6rem; }
+.linha input, .linha select { flex: 1; min-width: 140px; }
+.lista { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: .5rem; }
+.lista li { background: var(--asfalto); padding: .6rem .8rem; border-radius: .4rem; display: flex; justify-content: space-between; align-items: center; font-size: .9rem; }
+.rolagem { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+th, td { text-align: left; padding: .6rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+/* Janela Modal e Toast */
+dialog { background: var(--asfalto2); color: var(--tinta); border: 0; border-radius: .6rem; padding: 1.3rem; width: min(92vw, 380px); }
+dialog::backdrop { background: rgba(0,0,0,.6); }
+dialog select { width: 100%; margin:.6rem 0 1rem; }
+dialog .linha button { flex: 1; }
+.toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--faixa); color: #fff; padding: .8rem 1.2rem; border-radius: .4rem; font-weight: 600; }
+
+@media(max-width:720px) {
+  .auth, .painel { grid-template-columns: 1fr; }
+  .marca { padding: 1.5rem; }
+  .marca h1 { font-size: 1.8rem; }
+}
